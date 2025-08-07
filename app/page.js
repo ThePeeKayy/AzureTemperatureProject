@@ -11,7 +11,7 @@ import {
   AlertCircle,
   CheckCircle,
   Target,
-  TrendingUp, Cpu, CloudDownload, Filter, FlaskConical, Network
+  TrendingUp, Cpu, CloudDownload, Filter, FlaskConical, Network, ThermometerIcon
 } from 'lucide-react';
 
 const EnvironmentalDashboard = () => {
@@ -218,12 +218,14 @@ const EnvironmentalDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-700 via-orange-600 to-red-500">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-400 to-gray-500">
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-white mb-8">
-            PK's Temperature Dashboard 
+        <div className="text-center">
+          <div className='p-2 rounded-2xl mb-8'>
+          <h1 className="text-5xl font-bold text-white opacity-100">
+            🌡️ PK's Temperature Dashboard 🌱
           </h1>
+          </div>
           <div className="text-white/80 text-xl max-w-8xl mx-auto space-y-4 text-center flex flex-col items-center">
       <div className="flex items-start gap-3">
         <Cpu className="mt-1" />
@@ -257,7 +259,7 @@ const EnvironmentalDashboard = () => {
           <select
             value={selectedStation}
             onChange={(e) => setSelectedStation(e.target.value)}
-            className="bg-white/10 backdrop-blur-sm text-white px-4 py-3 rounded-xl border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+            className="bg-white/10 backdrop-blur-sm text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50"
           >
             <option value="all" className="text-gray-800">All Stations</option>
             {uniqueStations.map(station => (
@@ -278,7 +280,7 @@ const EnvironmentalDashboard = () => {
         {/* Statistics Cards */}
         {Object.keys(stats).length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 ">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/70 text-sm">Total Readings</p>
@@ -287,7 +289,7 @@ const EnvironmentalDashboard = () => {
               </div>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 ">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/70 text-sm">Stations</p>
@@ -296,7 +298,7 @@ const EnvironmentalDashboard = () => {
               </div>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 ">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/70 text-sm">Avg Value</p>
@@ -305,7 +307,7 @@ const EnvironmentalDashboard = () => {
               </div>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 ">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/70 text-sm">Range</p>
@@ -318,7 +320,7 @@ const EnvironmentalDashboard = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Data Display */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 ">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <Activity className="w-6 h-6" />
               Environmental Data ({filteredData.length} records)
@@ -327,7 +329,7 @@ const EnvironmentalDashboard = () => {
             <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-hide">
               {filteredData.length > 0 ? (
                 filteredData.slice(-20).map((item, index) => (
-                  <div key={index} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                  <div key={index} className="bg-white/5 rounded-xl p-4 ">
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-white" />
@@ -358,7 +360,7 @@ const EnvironmentalDashboard = () => {
           </div>
 
           {/* One Hour Ahead Prediction */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <Target className="w-6 h-6" />
               One Hour Ahead Prediction
@@ -371,7 +373,7 @@ const EnvironmentalDashboard = () => {
                 <select
                   value={selectedPredictionStation}
                   onChange={(e) => setSelectedPredictionStation(e.target.value)}
-                  className="flex-1 bg-white/10 backdrop-blur-sm text-white px-4 py-3 rounded-xl border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  className="flex-1 bg-white/10 backdrop-blur-sm text-white px-4 py-3 rounded-xl focus:outline-none"
                 >
                   {Object.entries(stationRegions).map(([stationId, info]) => (
                     <option key={stationId} value={stationId} className="text-gray-800">
@@ -382,7 +384,7 @@ const EnvironmentalDashboard = () => {
                 <button
                   onClick={getPredictionForStation}
                   disabled={predicting || processedData.length === 0}
-                  className="flex items-center gap-2 bg-gradient-to-r from-orange-700 to-red-400 text-white px-6 py-3 rounded-xl transition-all disabled:opacity-50"
+                  className="flex items-center gap-2 bg-gradient-to-r from-blue-700 to-blue-600 text-white px-6 py-3 rounded-xl transition-all disabled:opacity-50"
                 >
                   {predicting ? <Loader2 className="w-5 h-5 animate-spin" /> : <TrendingUp className="w-5 h-5" />}
                   Predict
@@ -393,10 +395,10 @@ const EnvironmentalDashboard = () => {
             {/* Prediction Result */}
             <div className="space-y-4">
               {prediction ? (
-                <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 border border-purple-500/30">
+                <div className="bg-gradient-to-r from-blue-500/20 to-blue-500/20 rounded-xl p-6">
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-purple-400" />
+                      <MapPin className="w-5 h-5 text-blue-400" />
                       <div>
                         <h3 className="text-white font-bold text-lg">{prediction.stationInfo.name}</h3>
                         <p className="text-white/60 text-sm">{prediction.stationInfo.coordinates}</p>
@@ -420,7 +422,7 @@ const EnvironmentalDashboard = () => {
                     </div>
                   </div>
 
-                  <div className="border-t border-white/10 pt-4">
+                  <div className=" pt-4">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-white/70 text-sm">Prediction Confidence:</span>
                       <span className="text-green-400 font-semibold">{(prediction.confidence * 100).toFixed(1)}%</span>
