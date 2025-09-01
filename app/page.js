@@ -226,25 +226,25 @@ const EnvironmentalDashboard = () => {
               <div className="flex items-center justify-center gap-6 mb-4">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-lg opacity-60 animate-pulse"></div>
-                  <Cloud className="relative w-16 h-16 text-blue-300 drop-shadow-lg" />
+                  <Cloud className="sm:block hidden relative w-16 h-16 text-blue-300 drop-shadow-lg" />
                 </div>
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-full blur-lg opacity-60 animate-pulse"></div>
-                  <ThermometerIcon className="relative w-16 h-16 text-orange-300 drop-shadow-lg" />
+                  <ThermometerIcon className="sm:block hidden relative w-16 h-16 text-orange-300 drop-shadow-lg" />
                 </div>
-                <h1 className="text-[48px] font-black text-white drop-shadow-2xl bg-gradient-to-r from-blue-200 via-white to-blue-200 bg-clip-text">
-                  PK's Azure ML Dashboard
+                <h1 className="text-[40px] font-black text-white drop-shadow-2xl bg-gradient-to-r from-blue-200 via-white to-blue-200 bg-clip-text">
+                  PK's AzureML <span className='text-red-400'>Temperature</span> Dashboard
                 </h1>
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-indigo-500 rounded-full blur-lg opacity-60 animate-pulse"></div>
-                  <Cpu className="relative w-16 h-16 text-purple-300 drop-shadow-lg" />
+                  <Cpu className="sm:block hidden relative w-16 h-16 text-purple-300 drop-shadow-lg" />
                 </div>
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full blur-lg opacity-60 animate-pulse"></div>
-                  <div className="relative text-5xl drop-shadow-lg">🌱</div>
+                  <div className="sm:block hidden relative text-5xl drop-shadow-lg">🌱</div>
                 </div>
               </div>
-              <div className="flex items-center justify-center gap-3 mb-4 text-white/90 text-lg font-semibold">
+              <div className="flex items-center justify-center gap-2 mb-4 text-white/90 text-lg font-semibold">
                 <span className="bg-blue-500/20 px-3 py-1 rounded-full border border-blue-400/30">Azure Data Factory</span>
                 <span className="text-white/50">•</span>
                 <span className="bg-purple-500/20 px-3 py-1 rounded-full border border-purple-400/30">Azure ML</span>
@@ -386,10 +386,10 @@ const EnvironmentalDashboard = () => {
                 <button
                   onClick={getPredictionForStation}
                   disabled={predicting || processedData.length === 0}
-                  className="flex items-center gap-2 bg-gradient-to-r from-blue-700 to-blue-600 text-white px-6 py-3 rounded-xl transition-all disabled:opacity-50"
+                  className="flex items-center gap-2 bg-gradient-to-r from-blue-700 to-blue-600 text-white sm:px-6 px-2 py-3 rounded-xl transition-all disabled:opacity-50"
                 >
                   {predicting ? <Loader2 className="w-5 h-5 animate-spin" /> : <TrendingUp className="w-5 h-5" />}
-                  Predict
+                  <span className='sm:block hidden'>Predict</span>
                 </button>
               </div>
             </div>
