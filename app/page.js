@@ -218,102 +218,240 @@ const EnvironmentalDashboard = () => {
   }, []);
 
   return (
-    <div className="text-center mb-12">
-          {/* Header */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 mb-8 border border-white/20">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 bg-gradient-to-r from-blue-200 to-white bg-clip-text">
-              🌡️ PK's Temperature Dashboard 🌱
-            </h1>
-            <p className="text-white/70 text-lg mb-6">
-              Real-time Singapore temperature monitoring with Azure ML predictions
-            </p>
-            
-            {/* GitHub Link */}
-            <div className="flex justify-center mb-6">
-              <a 
-                href="https://github.com/ThePeeKayy/AzureTemperatureProject" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gray-800/50 hover:bg-gray-800/70 text-white px-6 py-3 rounded-xl transition-all duration-300 border border-gray-600/50"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clipRule="evenodd" />
-                </svg>
-                View Source Code
-              </a>
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-400 to-gray-500">
+      <div className="container mx-auto px-4 py-8">
+         <div className="text-center">
+          <div className="relative mb-8">
+            <div className="bg-gradient-to-r from-white/20 via-white/30 to-white/20 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20">
+              <div className="flex items-center justify-center gap-6 mb-4">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-lg opacity-60 animate-pulse"></div>
+                  <Cloud className="relative w-16 h-16 text-blue-300 drop-shadow-lg" />
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-full blur-lg opacity-60 animate-pulse"></div>
+                  <ThermometerIcon className="relative w-16 h-16 text-orange-300 drop-shadow-lg" />
+                </div>
+                <h1 className="text-[48px] font-black text-white drop-shadow-2xl bg-gradient-to-r from-blue-200 via-white to-blue-200 bg-clip-text">
+                  PK's Azure ML Dashboard
+                </h1>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-indigo-500 rounded-full blur-lg opacity-60 animate-pulse"></div>
+                  <Cpu className="relative w-16 h-16 text-purple-300 drop-shadow-lg" />
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full blur-lg opacity-60 animate-pulse"></div>
+                  <div className="relative text-5xl drop-shadow-lg">🌱</div>
+                </div>
+              </div>
+              <div className="flex items-center justify-center gap-3 mb-4 text-white/90 text-lg font-semibold">
+                <span className="bg-blue-500/20 px-3 py-1 rounded-full border border-blue-400/30">Azure Data Factory</span>
+                <span className="text-white/50">•</span>
+                <span className="bg-purple-500/20 px-3 py-1 rounded-full border border-purple-400/30">Azure ML</span>
+                <span className="text-white/50">•</span>
+                <span className="bg-orange-500/20 px-3 py-1 rounded-full border border-orange-400/30">Temperature Prediction</span>
+              </div>
+              <div className="h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full"></div>
+            </div>
+          </div>
+          </div>
+
+        <div className="flex flex-wrap gap-4 justify-center mb-8">
+
+          <select
+            value={selectedStation}
+            onChange={(e) => setSelectedStation(e.target.value)}
+            className="bg-white/10 backdrop-blur-sm text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50"
+          >
+            <option value="all" className="text-gray-800">All Stations</option>
+            {uniqueStations.map(station => (
+              <option key={station} value={station} className="text-gray-800">
+                {stationRegions[station]?.name || station}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {error && (
+          <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-4 mb-8 flex items-center gap-3">
+            <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0" />
+            <p className="text-red-300">{error}</p>
+          </div>
+        )}
+
+        {/* Statistics Cards */}
+        {Object.keys(stats).length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 ">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/70 text-sm">Total Readings</p>
+                  <p className="text-white text-2xl font-bold">{stats.totalReadings}</p>
+                </div>
+              </div>
             </div>
 
-            {/* Cost Migration Notice */}
-            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
-              <div className="flex items-center justify-center gap-2 text-yellow-300">
-                <AlertCircle className="w-5 h-5" />
-                <p className="font-semibold">💰 Cost Optimization Update</p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 ">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/70 text-sm">Stations</p>
+                  <p className="text-white text-2xl font-bold">{stats.stationCount}</p>
+                </div>
               </div>
-              <p className="text-yellow-200/80 text-sm mt-2">
-                Migrated from Azure ML endpoints to <strong>Azure Container Apps</strong> due to high compute costs. 
-                This demo now uses simulated data with the same ML pipeline architecture.
-              </p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 ">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/70 text-sm">Avg Value</p>
+                  <p className="text-white text-2xl font-bold">{stats.avgValue}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 ">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/70 text-sm">Range</p>
+                  <p className="text-white text-2xl font-bold">{stats.minValue}-{stats.maxValue}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Data Display */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 ">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <Activity className="w-6 h-6" />
+              Environmental Data ({filteredData.length} records)
+            </h2>
+
+            <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-hide">
+              {filteredData.length > 0 ? (
+                filteredData.slice(-20).map((item, index) => (
+                  <div key={index} className="bg-white/5 rounded-xl p-4 ">
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-white" />
+                        <span className="text-white font-semibold">
+                          {stationRegions[item.station_id]?.name || item.station_id}
+                        </span>
+                      </div>
+                      <span className="text-white font-bold text-lg">{item.value.toFixed(2)}°C</span>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-white/70">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {new Date(item.timestamp).toLocaleString()}
+                      </div>
+                    </div>
+                    <div className="mt-2 text-xs text-white/60">
+                      Lag1: {item.value_lag1?.toFixed(2)}°C | Lag24: {item.value_lag24?.toFixed(2)}°C
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-8">
+                  <Cloud className="w-12 h-12 text-white/30 mx-auto mb-3" />
+                  <p className="text-white/60">No data available. Click "Fetch Data" to load.</p>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Architecture Overview */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center justify-center gap-3">
-              <Network className="w-6 h-6" />
-              Azure Architecture Overview
+          {/* One Hour Ahead Prediction */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <Target className="w-6 h-6" />
+              One Hour Ahead Prediction
             </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-              <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
-                <CloudDownload className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                <div className="text-left">
-                  <p className="text-white font-semibold mb-1">Data Ingestion</p>
-                  <p className="text-white/70">Data Factory pulls from <strong>data.gov.sg</strong> on 15-day schedule</p>
-                </div>
-              </div>
 
-              <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
-                <Filter className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <div className="text-left">
-                  <p className="text-white font-semibold mb-1">Data Processing</p>
-                  <p className="text-white/70">Data Flow activities clean and transform raw temperature data</p>
-                </div>
+            {/* Station Selection for Prediction */}
+            <div className="mb-6">
+              <label className="block text-white/70 text-sm mb-2">Select Station for Prediction:</label>
+              <div className="flex gap-3">
+                <select
+                  value={selectedPredictionStation}
+                  onChange={(e) => setSelectedPredictionStation(e.target.value)}
+                  className="flex-1 bg-white/10 backdrop-blur-sm text-white px-4 py-3 rounded-xl focus:outline-none"
+                >
+                  {Object.entries(stationRegions).map(([stationId, info]) => (
+                    <option key={stationId} value={stationId} className="text-gray-800">
+                      {info.name} ({info.region})
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={getPredictionForStation}
+                  disabled={predicting || processedData.length === 0}
+                  className="flex items-center gap-2 bg-gradient-to-r from-blue-700 to-blue-600 text-white px-6 py-3 rounded-xl transition-all disabled:opacity-50"
+                >
+                  {predicting ? <Loader2 className="w-5 h-5 animate-spin" /> : <TrendingUp className="w-5 h-5" />}
+                  Predict
+                </button>
               </div>
+            </div>
 
-              <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
-                <FlaskConical className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
-                <div className="text-left">
-                  <p className="text-white font-semibold mb-1">ML Training</p>
-                  <p className="text-white/70">Azure ML workspace trains <strong>Random Forest</strong> model</p>
-                </div>
-              </div>
+            {/* Prediction Result */}
+            <div className="space-y-4">
+              {prediction ? (
+                <div className="bg-gradient-to-r from-blue-500/20 to-blue-500/20 rounded-xl p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-blue-400" />
+                      <div>
+                        <h3 className="text-white font-bold text-lg">{prediction.stationInfo.name}</h3>
+                        <p className="text-white/60 text-sm">{prediction.stationInfo.coordinates}</p>
+                      </div>
+                    </div>
+                    <CheckCircle className="w-6 h-6 text-green-400" />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-6 mb-4">
+                    <div className="text-center">
+                      <p className="text-white/70 text-sm mb-1">Current Temperature</p>
+                      <p className="text-white text-2xl font-bold">{prediction.currentValue.toFixed(2)}°C</p>
+                      <p className="text-white/50 text-xs">{prediction.currentTimestamp.toLocaleString()}</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-white/70 text-sm mb-1">Predicted Temperature</p>
+                      <p className="text-green-400 text-2xl font-bold">
+                        {typeof prediction.predictedValue === 'number' ? prediction.predictedValue.toFixed(2) : prediction.predictedValue}°C
+                      </p>
+                      <p className="text-white/50 text-xs">{prediction.predictedTimestamp.toLocaleString()}</p>
+                    </div>
+                  </div>
 
-              <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
-                <Cpu className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
-                <div className="text-left">
-                  <p className="text-white font-semibold mb-1">Prediction API</p>
-                  <p className="text-white/70">Container Apps host the model for <strong>one-hour ahead</strong> forecasts</p>
-                </div>
-              </div>
+                  <div className=" pt-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-white/70 text-sm">Prediction Confidence:</span>
+                      <span className="text-green-400 font-semibold">{(prediction.confidence * 100).toFixed(1)}%</span>
+                    </div>
+                    <div className="bg-white/10 rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-green-400 to-blue-400 h-2 rounded-full transition-all duration-1000"
+                        style={{ width: `${prediction.confidence * 100}%` }}
+                      />
+                    </div>
+                  </div>
 
-              <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
-                <ThermometerIcon className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
-                <div className="text-left">
-                  <p className="text-white font-semibold mb-1">Real-time Dashboard</p>
-                  <p className="text-white/70">React frontend displays live data and predictions</p>
+                  <div className="mt-4 text-xs text-white/60">
+                    <p>Features: Hour: {prediction.inputFeatures.hour}, Day: {prediction.inputFeatures.day_of_week}, Month: {prediction.inputFeatures.month}</p>
+                    <p>Lag values: 1hr: {prediction.inputFeatures.value_lag1.toFixed(2)}°C, 24hr: {prediction.inputFeatures.value_lag24.toFixed(2)}°C</p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
-                <Activity className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
-                <div className="text-left">
-                  <p className="text-white font-semibold mb-1">Monitoring</p>
-                  <p className="text-white/70">Application Insights tracks performance and usage metrics</p>
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-white/40 text-sm">Select a station and click "Predict" to forecast the next hour's temperature</p>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
+      </div>
+    </div>
   );
 };
 
